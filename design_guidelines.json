@@ -1,0 +1,104 @@
+{
+  "theme": "DARK",
+  "archetype": "5 (Jewel & Luxury) + 4 (Swiss & High-Contrast)",
+  "design_philosophy": "High-end voice assistant aesthetic (Arc, Raycast, Google Assistant). Dark, spacious, cinematic, with subtle grain, optical glassmorphism, and bold asymmetry.",
+  "colors": {
+    "background": "#050505",
+    "surface_flat": "#0A0A0A",
+    "surface_glass": "rgba(255, 255, 255, 0.03)",
+    "border_subtle": "rgba(255, 255, 255, 0.08)",
+    "border_highlight": "rgba(255, 255, 255, 0.15)",
+    "text_primary": "#FFFFFF",
+    "text_secondary": "rgba(255, 255, 255, 0.5)",
+    "text_muted": "rgba(255, 255, 255, 0.3)",
+    "orb_states": {
+      "idle": "#9D4CDD",
+      "listening": "#10B981",
+      "thinking": "#3B82F6",
+      "speaking": "#F43F5E"
+    }
+  },
+  "typography": {
+    "setup": "Use next/font or Google Fonts in index.html for these fonts.",
+    "headings": {
+      "family": "Bricolage Grotesque, sans-serif",
+      "weights": ["400", "700"],
+      "usage": "Headers, Orb status text, App Name 'Nova', Marketing/Teaching section titles. Use tracking-tight."
+    },
+    "body": {
+      "family": "JetBrains Mono, monospace",
+      "weights": ["400"],
+      "usage": "Conversation history, terminal/code blocks, tool names, settings labels, architecture layer descriptions. Tracking normal."
+    }
+  },
+  "layout_and_spacing": {
+    "strategy": "Generous Spacing (p-8 to p-12 for major containers). Mobile-first, responsive grids.",
+    "surface_strategy": {
+      "glassmorphism": "Optical Clarity. bg-white/5, backdrop-blur-2xl, border-white/10 inner stroke. Apply to floating navs, tool panels, and modal overlays.",
+      "flat": "For architecture bento boxes: solid bg-[#0A0A0A] with 1px border-white/5 and no shadow."
+    }
+  },
+  "components": {
+    "voice_orb": {
+      "role": "Centerpiece / Hero",
+      "technical": "Use Framer Motion. Combine radial gradients with animate props. Must be 60fps (animate only transform/opacity).",
+      "visuals": {
+        "base": "A central glowing circle with heavy backdrop-blur. mix-blend-screen for outer glows.",
+        "idle": {
+          "color": "Purple (#9D4CDD)",
+          "animation": "Slow breathing pulse. Scale core 0.95 -> 1.05 over 4s. Opacity of outer glow fades 0.4 -> 0.8."
+        },
+        "listening": {
+          "color": "Green (#10B981)",
+          "animation": "Expanding ripple rings. 2-3 motion.div rings that scale 1 -> 2.5 and fade opacity to 0 over 1.5s continuously."
+        },
+        "thinking": {
+          "color": "Blue (#3B82F6)",
+          "animation": "Rotating arc + dot fade. Use a conic-gradient mask or SVG stroke-dasharray rotating 360deg over 2s. Inner dot pulses."
+        },
+        "speaking": {
+          "color": "Coral (#F43F5E)",
+          "animation": "Waveform bars. Render 3-5 vertical pills inside/around the orb that randomly scaleY(0.3 to 1.2) rapidly."
+        }
+      }
+    },
+    "conversation_panel": {
+      "layout": "Google-Assistant style. Centralized or side-anchored depending on viewport.",
+      "user_bubble": "Align right. Glassmorphism border, subtle bg-white/5, rounded-2xl.",
+      "ai_bubble": "Align left. Solid dark muted bg, no border, rounded-2xl. Use JetBrains Mono for text.",
+      "input_area": "Optional text input anchored at bottom with a push-to-talk mic button. Mic button uses active orb color when listening."
+    },
+    "architecture_teaching_page": {
+      "layout": "MODE B: The 'Control Room' Bento Grid.",
+      "structure": "grid-cols-1 md:grid-cols-3 lg:grid-cols-5. gap-6.",
+      "layers": [
+        "1. Tauri/Electron Shell (col-span-1 md:col-span-full, visual top layer)",
+        "2. Voice Pipeline (STT/TTS)",
+        "3. Brain (Claude + MCP + Vector)",
+        "4. MCP Tools (Calendar, Weather, etc.)",
+        "5. External APIs"
+      ],
+      "styling": "Use grid layout with 'Grid Borders' (border-collapse style). Add subtle SVG dashed lines connecting the layers to show data flow."
+    },
+    "mcp_tools_panel": {
+      "layout": "Sidebar or bottom sheet. Dense data layout.",
+      "styling": "List items with glowing status dots (green = active/enabled, dim gray = mocked/disabled). JetBrains Mono for tool names."
+    },
+    "system_tray_header": {
+      "layout": "Fixed top, full width, h-14, glassmorphism.",
+      "elements": "Left: 'Nova' in Bricolage Grotesque. Right: Connection indicator (pulsing 6px dot) and Settings toggle."
+    }
+  },
+  "motion_and_interactions": {
+    "general": "Smooth state changes. Hover states MUST have higher contrast.",
+    "buttons": "Hover: bg-white/10 text-white. Active: scale-95.",
+    "accessibility": "Respect prefers-reduced-motion. Provide text fallbacks for orb states."
+  },
+  "assets_and_effects": {
+    "cinematic_noise": "MANDATORY: Add a global fixed overlay `div` with pointer-events-none, mix-blend-overlay, and opacity-20 containing an SVG feTurbulence fractalNoise filter. This kills the digital flatness and creates the premium 'Arc Browser' feel.",
+    "icons": "Use lucide-react (default) with 1px or 1.5px stroke width for a sharp, technical look."
+  },
+  "testing": {
+    "attributes": "All interactive elements must have data-testid. Examples: data-testid='mic-button', data-testid='orb-status', data-testid='chat-input'."
+  }
+}
